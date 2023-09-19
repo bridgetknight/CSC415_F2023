@@ -32,6 +32,19 @@ def find_max_2D_single(arr):
             max = arr[row][col]
 
     return str(max)
+
+def find_max_2D_double(arr): 
+    max = arr[0][0]
+    
+    for i, num in enumerate(arr):
+        for j, num in enumerate(arr):
+            if(arr[i][j] > max):
+                max = arr[i][j]
+                
+    return str(max)
+
+# Example 3: Get sum of an array.
+            
     
 if __name__ == "__main__":
 
@@ -62,18 +75,20 @@ if __name__ == "__main__":
     print("Maximum: "+find_max_2D_single(arr))
     
     end = time.time()
-   # print("Elapsed time: "+str(end-start)+" seconds")
+    print("Elapsed time: "+str(end-start)+" seconds")
     
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     # Example 2 (2D array) - TWO FOR-LOOPS
     # Get times to determine speed of algorithm
-    #start = time.time()
+    start = time.time()
     
-    #print("* * * * * EXAMPLE 2: Two For-Loops * * * * *")
-    #print("Maximum: "+find_max_2D_single(arr))
+    print("* * * * * EXAMPLE 2: Two For-Loops * * * * *")
+    print("Maximum: "+find_max_2D_single(arr))
     
-    #end = time.time()
-    #print("Elapsed time: "+str(end-start)+" seconds")
+    end = time.time()
+    print("Elapsed time: "+str(end-start)+" seconds")
+    
+    
     
     
     
