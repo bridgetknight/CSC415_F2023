@@ -1,0 +1,193 @@
+/* Reset some default browser styles */
+html, body, h1, h2, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply a basic font and background color to the entire page */
+body {
+    font-family: Hack;
+    background-color: #484A47;
+    padding-bottom: 200px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#center {
+    font-family:"Rubik";
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:100px;
+    color: #E0AC9D;
+}
+
+#header {
+    background-color: #495659;
+    width: 100%;
+    height: 70px;
+    box-shadow: 5px 10px 15px #414141;
+}
+
+#subtitle {
+    cursor: default;
+    position: relative;
+    padding: 10px;
+    left: 161px;
+    top:-52px;
+    color: #E88873;
+    font-size: 16px;
+    display: flex; 
+    font-weight: bold;
+}
+
+#name {
+    cursor: default;
+    position: relative;
+    padding: 19px;
+    color: #E88873;
+    font-size: 26px;
+    display: flex; 
+    font-weight: bold;
+}
+
+#logo {
+    position: relative;
+    left: 300px;
+    width: 350px;
+    top:-50px;
+}
+
+#center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+}
+
+#blurb {
+    font-size: 18px;
+    position: relative;
+    line-height: 25px;
+    justify-content:space-evenly;
+}
+
+#results_content {
+    padding:10px;
+    color: #E0AC9D;
+    font-family:"Rubik";
+    font-size: 16px;
+    font-weight:normal;
+}  
+
+#editor_box {
+    position: relative;
+    top: 60px;
+    height:500px;
+}
+
+#editor { 
+    position: absolute;
+    top: 35px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#run {
+    /* Text */
+    font-family: "Rubik";
+    font-size: 20px;
+    color: #E0AC9D;
+
+    /* Positioning */
+    position: relative;
+    left: 636px;
+    height: 30px;
+    width: 80px;
+    top:-5px;
+    
+    /* Button decoration */
+    cursor: pointer;
+    outline: 1px solid #E88873;
+    border-radius: 3px;
+    background-color: #495659;
+    padding: 0;
+    border: none;
+}
+
+#run:hover {
+    background-color: #3f4a4c;
+}
+
+.title.editor {
+    position: relative;
+    top: -2px;
+}
+
+.title {
+    cursor: default;
+    font-family: "Hack";
+    font-weight:bold;
+    color: #E88873;
+    font-size: 22px; 
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+  
+.row {
+    position: relative;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.links {
+    position: relative;
+    top: -30px;
+    display: flex;
+    width: 500px;
+}
+
+.link_float {
+    margin-right: 25px;
+    transition: margin 0.2s ease-in-out;
+}
+
+.link_float:hover {
+    margin-top: -5px;
+    margin-bottom: 5px;
+    font-weight:bold;
+
+}
+
+.link_bold:hover {
+    font-weight:bold;
+ 
+}
+
+#about_me::after {
+    position: relative;
+    top:3px;
+    left:-5px;
+    content: "";
+    width: 6px;
+    height: 20px;
+    background: #ec7fff;
+    display: inline-block;
+
+    animation: cursor-blink 1.5s steps(2) infinite;
+}
+
+@keyframes cursor-blink {
+    0% {
+      opacity: 0;
+    }
+}
+
