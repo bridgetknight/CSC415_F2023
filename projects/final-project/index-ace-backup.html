@@ -2,10 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script> <!-- Pyodide -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> <!-- JQuery -->
     <title>Quick Benchmark</title>
     <link rel="stylesheet" href="style.css">
+
+    <script>
+        const output = document.getElementById("output_box");
+    </script>
     <!--<link rel="icon" href="">-->
 </head>
 
@@ -24,20 +34,66 @@
             the time and memory statistics. Simply enter your code in the editor and click run to see your
             results below!
         </div>
+        <span class="title output">Output</span>
+        <div id="output_box"></div>
         <div id="editor_box">
             <span class="title editor">Editor</span>
             <div id="editor"></div>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js" type="text/javascript" charset="utf-8"></script>
             <script>
+                // init Pyodide and gather code
                 var editor = ace.edit("editor");
                 editor.setTheme("ace/theme/ambiance");
                 editor.getSession().setMode("ace/mode/python");
 
-                function runCode() {
-                    var code = editor.getValue()
+                /*async function main() {
+                    let pyodide = await loadPyodide();
+                    output.value += "Ready!\n";
+
+                    // gather input
+                    const code = editor.getValue();
+                    console.log("code: ",code);
+                    
+                    // save as buffer file
+                    // https://www.tutorialspoint.com/how-to-create-and-save-text-file-in-javascript
+                    const file = new Blob([code], { type: "text/x-python"} );
+                    const tmpUrl = URL.createObjectURL(file);
+    
+                    output.innerHTML = "Initializing...\n";
+
+                    return pyodide;
                 }
+
+                function addToOutput(s) {
+                    output.innerHTML += ">>>" + code + "\n" + s + "\n";
+                    console.log(output);
+                }
+
+                async function evaluatePython() {
+                    // init Pyodide
+                    let pyodideReadyPromise = main();
+
+                    // timing
+                    const startTime = performance.now();
+
+                    // evaluate code
+                    const pyodide = await pyodideReadyPromise;
+                    try {
+                      const output = await pyodide.runPythonAsync(code.value);  // Use runPythonAsync for asynchronous evaluation
+                      addToOutput(output);
+                      console.log(output);
+                    } catch (err) {
+                      addToOutput(err);
+                    }
+
+                    // end timing
+                    const endTime = performance.now();
+                    const elapsedTime = startTime - endTime;
+                }*/
+
+                
             </script>
-            <button id="run">&#9654;</button>
+            <button id="run" onclick="evaluatePython();">&#9654;</button>
         </div>
     </div>       
 </body>
