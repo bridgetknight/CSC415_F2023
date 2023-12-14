@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script> <!-- Pyodide -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> <!-- JQuery -->
     <title>Quick Benchmark</title>
     <link rel="stylesheet" href="style.css">
 
@@ -35,65 +33,90 @@
             results below!
         </div>
         <span class="title output">Output</span>
-        <div id="output_box"></div>
+        <p id="output"></p>
         <div id="editor_box">
             <span class="title editor">Editor</span>
             <div id="editor"></div>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js" type="text/javascript" charset="utf-8"></script>
             <script>
-                // init Pyodide and gather code
                 var editor = ace.edit("editor");
                 editor.setTheme("ace/theme/ambiance");
                 editor.getSession().setMode("ace/mode/python");
 
-                /*async function main() {
-                    let pyodide = await loadPyodide();
-                    output.value += "Ready!\n";
-
-                    // gather input
+                function executePython() {
+                    // get code from user input
                     const code = editor.getValue();
-                    console.log("code: ",code);
-                    
-                    // save as buffer file
-                    // https://www.tutorialspoint.com/how-to-create-and-save-text-file-in-javascript
-                    const file = new Blob([code], { type: "text/x-python"} );
-                    const tmpUrl = URL.createObjectURL(file);
-    
-                    output.innerHTML = "Initializing...\n";
-
-                    return pyodide;
-                }
-
-                function addToOutput(s) {
-                    output.innerHTML += ">>>" + code + "\n" + s + "\n";
-                    console.log(output);
-                }
-
-                async function evaluatePython() {
-                    // init Pyodide
-                    let pyodideReadyPromise = main();
+                    console.log(">>>",code);
 
                     // timing
-                    const startTime = performance.now();
+                    const startTime = Date.now();
+                    var endTime;
 
-                    // evaluate code
-                    const pyodide = await pyodideReadyPromise;
-                    try {
-                      const output = await pyodide.runPythonAsync(code.value);  // Use runPythonAsync for asynchronous evaluation
-                      addToOutput(output);
-                      console.log(output);
-                    } catch (err) {
-                      addToOutput(err);
-                    }
+                    // wrap code in a function with timing calculation
+                    const wrappedCode = `(function() { ${code}
+                        const endTime = Date.now();
+                        document.getElementById("output").innerText +=
+                        "Execution time: ${(endTime - startTime)/1000} seconds";
+                    })();`;
 
-                    // end timing
-                    const endTime = performance.now();
-                    const elapsedTime = startTime - endTime;
+                    // run code using PyScript
+                    out = pyscript.eval(wrappedCode);
+                    console.log(out);
+                }
+
+                /*async function executePython() {
+                    // get code from user input
+                    const code = editor.getValue();
+                    console.log(">>>",code);
+                    const wrappedCode =  `def test(): 
+                        ${code}`;
+                    // timing
+                    const startTime = Date.now();
+                    var endTime; 
+                    
+                    const pyodideRuntime = await loadPyodide();
+                    pyodideRuntime.runPython(code);
+
+                    let val = pyodideRuntime.globals.get("test");
+                    console.log(val);
                 }*/
-
-                
             </script>
-            <button id="run" onclick="evaluatePython();">&#9654;</button>
+            <button id="run">&#9654;</button>
+            <script>
+                /*const runButton = document.getElementById("run");
+                const codeInput = editor.getValue();
+                const outputElement = document.getElementById("output");
+
+                runButton.addEventListener("click", async () => {
+                    // timing
+                    const startTime = Date.now();
+
+                    // send code to PythonRun using fetch API
+                    const response = await fetch("https://api.pythonrun.io/v1/run", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            code: codeInput,
+                            input: "" // optional input
+                        }),
+                    })
+                    //const data = await response.json();
+                });
+
+                response.json().then(data => {
+                    console.log(response);
+                    //const data = response.json();
+                    const outputText = `${data.output}`;
+                    const endTime = Date.now();
+                    const elapsedTime = endTime - startTime;
+                    const timingResult = "Execution time: ${elapsedTime} ms";
+                    outputElement.textContent = data.error ? `Error: ${data.error}` : outputText + timingText;
+                }).catch(error => {
+                    outputElement.textContent = `Error: ${error.message}`;  
+                });*/
+            </script>
         </div>
     </div>       
 </body>
