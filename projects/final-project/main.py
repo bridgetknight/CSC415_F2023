@@ -11,6 +11,15 @@ examples = {"Hello World": "examples/hello.py",
             "Insertion Sort": "examples/insertion_sort.py",
             "Bubble Sort": "examples/bubble_sort.py"}
 
+# Code for handling button highlight on hover
+def on_enter(e):
+    run_button['background'] = 'green'
+
+def on_leave(e):
+    run_button['background'] = '#87c98f'
+
+# Function for executing user-input code
+# Prints output and timing if successful, captures and prints error message otherwise
 def run_code():
     # This function will be called when the run button is clicked.
     code = textbox.get("1.0", tk.END)
@@ -50,6 +59,7 @@ def run_code():
         output_text.insert(tk.END, f"Error: {e}")
     output_text.configure(state='disabled')
 
+# Load example algorithms
 def example_algorithm(*args):
     # Function to change input text based on selected example algorithm
     print(tkvar)
@@ -61,13 +71,15 @@ def example_algorithm(*args):
     textbox.delete("1.0", tk.END)
     textbox.insert(tk.END, data)
 
+
+# * * * * * * * * * * * * * * * * * * MAIN * * * * * * * * * * * * * * * * * * #
 if __name__ == "__main__":
 
     # Set up tkinter GUI
     root = tk.Tk()
     root.geometry("700x600")
     root.title("Benchmarker")
-    root.config(background='#34435E', padx=10, pady=10)
+    root.config(background='#6e8898', padx=10, pady=10)
    # root.grid_rowconfigure(1, weight=1)
    # root.grid_columnconfigure(0, weight=2)
 
@@ -76,40 +88,37 @@ if __name__ == "__main__":
     tkvar.set("Hello World")
 
     # Create the options menu for examples
-    dropdown_frame = tk.Frame(root, width=450, height=10, pady=10, padx=2,bd=0, highlightthickness=0, relief='ridge')
-    dropdown_frame.grid(row=0, sticky="w",)
+    dropdown_frame = tk.Frame(root, width=450, height=1, pady=0,bd=0, highlightthickness=0, relief='ridge', background='#6e8898')
+    dropdown_frame.grid(row=0, sticky="w",pady=(5,0))
     dropdown_menu = tk.OptionMenu(dropdown_frame, tkvar, *examples.keys())
-    dropdown_menu.config(width=20)
-    dropdown_menu.grid(row=1, column=1)
+    dropdown_menu.config(width=20,bg="#6e8898", fg="#192D38", activebackground="#E2C044", activeforeground="BLACK")
+    dropdown_menu["menu"].config(bg="#6e8898", fg="#192D38", activebackground="#E2C044", activeforeground="BLACK")
 
-    dd_label = Label(dropdown_frame, text="Select an example algorithm:", font='Arial 10 bold',bd=0, highlightthickness=0, relief='ridge')
-    dd_label.grid(row=0, column=1, pady=(5,0), sticky="W")
-    
+    dropdown_menu.grid(row=1, column=0, padx=(0,10))
+
+    dd_label = Label(dropdown_frame, text="Select an example algorithm:", font='Arial 10 bold',bd=0, highlightthickness=0, relief='ridge', background="#6e8898", fg="#192D38")
+    dd_label.grid(row=0, column=0, pady=(0,0), sticky="W")
+
     tkvar.trace("w", example_algorithm)
 
     # Create text input box
-    input_frame = tk.Frame(root, width=10, height=10,bd=0, highlightthickness=0, relief='ridge')
-    
-    # Horizontal (x) Scroll bar
-    xscrollbar = Scrollbar(input_frame, orient=HORIZONTAL)
-
-    # Vertical (y) Scroll Bar
-    yscrollbar = Scrollbar(input_frame)
+    input_frame = tk.Frame(root, width=10, height=10,bd=0, highlightthickness=0, relief='ridge', background="#6e8898")
     
     input_frame.grid(row=1, sticky="ew")
     twidth = 84
     theight = 10
     textbox = tk.Text(input_frame, width=twidth, height=theight,
-                xscrollcommand=xscrollbar.set,
-                yscrollcommand=yscrollbar.set,
-                wrap=WORD,bd=0, highlightthickness=0, relief='ridge')
+                wrap=WORD,bd=0, highlightthickness=0, relief='ridge',
+                background="#D3D0CB")
     textbox.grid(row=3, column=0)
 
-    in_label = Label(input_frame, text="Input", font='Arial 10 bold',bd=0, highlightthickness=0, relief='ridge')
+    in_label = Label(input_frame, text="Input", font='Arial 10 bold',bd=0, highlightthickness=0, relief='ridge', background="#6e8898", fg="#192D38")
     in_label.grid(row=2, column=0, sticky="W", pady=(5,2))
 
     run_button = tk.Button(input_frame, width=3, height=1, text="Run", command=run_code, padx=4, pady=3, bg="#87c98f",bd=0, highlightthickness=0, relief='ridge')
     run_button.grid(row=2, column=0, sticky="E")
+    run_button.bind("<Enter>", on_enter)
+    run_button.bind("<Leave>", on_leave)
 
     # Load default code
     with open("examples/hello.py", "r") as file:
@@ -118,10 +127,10 @@ if __name__ == "__main__":
     textbox.insert(tk.END, data)
 
     # Create output box
-    output_text = tk.Text(input_frame, width=84, height=10, wrap=WORD,bd=0, highlightthickness=0, relief='ridge')
+    output_text = tk.Text(input_frame, width=84, height=10, wrap=WORD,bd=0, highlightthickness=0, relief='ridge', background="#D3D0CB")
     output_text.grid(row=5, column=0)
     output_text.config(state="disabled")
-    out_label = Label(input_frame, text="Output", font="Arial 10 bold",bd=0, highlightthickness=0, relief='ridge')
+    out_label = Label(input_frame, text="Output", font="Arial 10 bold",bd=0, highlightthickness=0, relief='ridge', background="#6e8898", fg="#192D38")
     out_label.grid(row=4, column=0, sticky="W", pady=(10,2))
 
     # Start the main loop
